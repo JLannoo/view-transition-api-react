@@ -91,7 +91,6 @@ button:focus-visible {
   align-items: stretch;
 
   width: 100%;
-  max-width: 1280px;
   height: 100vh;
   
   text-align: center;
