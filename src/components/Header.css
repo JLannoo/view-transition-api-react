@@ -1,0 +1,12 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+    font-size: clamp(1rem, 5vw, 2rem);
+    color: white;
+
+    background-color: #282c34;
+
+    padding: 1rem;
+}

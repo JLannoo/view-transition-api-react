@@ -1,0 +1,45 @@
+main.third {
+    view-transition-name: main-third;
+}
+::view-transition-old(main-third){
+  animation: bounce-out var(--transition-timing);
+}
+::view-transition-new(main-third){
+  animation: bounce-in var(--transition-timing);
+}
+
+@keyframes bounce-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(150%);
+    }
+}
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-150%);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(1%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shrink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}

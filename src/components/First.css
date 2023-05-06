@@ -1,0 +1,34 @@
+main.first {
+    view-transition-name: main-first;
+}
+::view-transition-old(main-first){
+  animation: slide-right var(--transition-timing);
+}
+::view-transition-new(main-first){
+  animation: slide-left var(--transition-timing);
+}
+
+@keyframes slide-right {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(150%);
+  }
+}
+@keyframes slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-150%);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(1%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
