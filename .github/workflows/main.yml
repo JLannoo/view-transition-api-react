@@ -1,0 +1,63 @@
+name: "GH Pages Deploy"
+
+on:
+  pull_request: 
+    branches: ["deploy"]
+  push:
+    branches: ["deploy"]
+
+jobs:
+  prevent_redundancy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous build
+        uses: n1hility/cancel-previous-runs@v2
+        with:
+          token: ${{ github.token }}
+          workflow: gh-page-deploy.yml
+
+  build_app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+          node-version: 16
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+
+  deploy_app:
+    if: ${{ github.event_name == 'push' }}
+    needs: [build_app]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+        
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: github-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
